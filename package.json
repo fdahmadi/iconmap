@@ -7,14 +7,17 @@
     "build": "vite build",
     "preview": "vite preview",
     "generate-icons": "node scripts/generate-icons-config.js",
-    "generate-mapping": "node scripts/generate-icons-mapping.js"
+    "generate-mapping": "node scripts/generate-icons-mapping.js",
+    "ai": "node scripts/ai.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fluentui/react-icons": "^2.0.316",
     "@mui/icons-material": "^5.15.0",
     "@mui/material": "^5.15.0",
+    "dotenv": "^17.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
