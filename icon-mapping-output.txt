@@ -21,3 +21,7 @@ AccessAlarmsTwoTone,ClockAlarm24Regular
 AccessTime,Clock24Regular
 AccessTimeFilled,Clock24Filled
 AccessTimeFilledOutlined,Clock24Regular
+AccessTimeFilledRounded,Clock24Filled
+AccessTimeFilledSharp,Clock24Filled
+AccessTimeFilledTwoTone,Clock24Filled
+AccessTimeOutlined,Clock24Regular
