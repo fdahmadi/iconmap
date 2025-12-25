@@ -8,7 +8,9 @@
     "preview": "vite preview",
     "generate-icons": "node scripts/generate-icons-config.js",
     "generate-mapping": "node scripts/generate-icons-mapping.js",
-    "ai": "node scripts/ai.js"
+    "ai": "node scripts/ai.js",
+    "ai2": "node scripts/ai2.js",
+    "extract-icon-names": "node scripts/extract-icon-names.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
