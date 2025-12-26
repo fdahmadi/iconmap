@@ -6941,3 +6941,5 @@ PlagiarismSharp,ClipboardTextEdit24Regular
 PlagiarismTwoTone,DocumentSearch24Regular
 PlayArrow,Play24Regular
 PlayArrowOutlined,Play24Regular
+PlayArrowRounded,Play24Regular
+PlayArrowSharp,Play24Filled
