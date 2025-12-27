@@ -8794,3 +8794,9 @@ Square,Square24Regular
 SquareFoot,Square24Regular
 SquareFootOutlined,Square24Regular
 SquareFootRounded,Square24Regular
+SquareFootSharp,Square24Regular
+SquareFootTwoTone,Ruler24Regular
+SquareOutlined,Square24Regular
+SquareRounded,Square24Regular
+SquareSharp,Square24Regular
+SquareTwoTone,Square24Regular
