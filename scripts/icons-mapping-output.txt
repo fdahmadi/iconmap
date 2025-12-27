@@ -1,5 +1,0 @@
-Abc,TextFont24Regular
-AbcOutlined,TextCaseTitle24Regular
-AbcRounded,null
-AbcSharp,TextCaseUppercase24Regular
-AbcTwoTone,TextCaseTitle24Regular
