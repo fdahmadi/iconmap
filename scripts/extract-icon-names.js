@@ -71,8 +71,29 @@ for (let i = 0; i < 30; i++) {
 // Convert Set to sorted array
 const fluentIconNamesArray = Array.from(fluentIconNames).sort();
 
+// Extract MDI Material UI icon names from index.d.ts file
+const mdiPackagePath = path.join(
+  __dirname,
+  "..",
+  "node_modules",
+  "mdi-material-ui",
+  "index.d.ts"
+);
+
+const mdiIconNames = new Set();
+if (fs.existsSync(mdiPackagePath)) {
+  const content = fs.readFileSync(mdiPackagePath, "utf-8");
+  // Extract export names using regex: export { default as IconName } from
+  const matches = content.matchAll(/export { default as (\w+) }/g);
+  for (const match of matches) {
+    mdiIconNames.add(match[1]);
+  }
+}
+const mdiIconNamesArray = Array.from(mdiIconNames).sort();
+
 console.log(`Found ${muiIconNamesArray.length} MUI icons`);
 console.log(`Found ${fluentIconNamesArray.length} FluentUI icons`);
+console.log(`Found ${mdiIconNamesArray.length} MDI Material UI icons`);
 
 // Write MUI icon names to file
 const muiOutputPath = path.join(__dirname, "..", "mui-icons-names.txt");
@@ -85,6 +106,12 @@ const fluentOutputPath = path.join(__dirname, "..", "fluentui-icons-names.txt");
 const fluentContent = fluentIconNamesArray.join("\n");
 fs.writeFileSync(fluentOutputPath, fluentContent, "utf-8");
 console.log(`✅ FluentUI icons written to: ${fluentOutputPath}`);
+
+// Write MDI Material UI icon names to file
+const mdiOutputPath = path.join(__dirname, "..", "mdi-material-ui-icons-names.txt");
+const mdiContent = mdiIconNamesArray.join("\n");
+fs.writeFileSync(mdiOutputPath, mdiContent, "utf-8");
+console.log(`✅ MDI Material UI icons written to: ${mdiOutputPath}`);
 
 console.log("\n✨ Done! Icon names have been extracted to text files.");
 

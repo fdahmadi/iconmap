@@ -9,7 +9,8 @@
     "generate-icons": "node scripts/generate-icons-config.js",
     "generate-mapping": "node scripts/generate-icons-mapping.js",
     "ai": "node scripts/ai.js",
-    "ai2": "node scripts/ai2.js",
+    "ai-mui": "node scripts/ai-mui.js",
+    "ai-mdi": "node scripts/ai-mdi.js",
     "extract-icon-names": "node scripts/extract-icon-names.js"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "@mui/icons-material": "^5.15.0",
     "@mui/material": "^5.15.0",
     "dotenv": "^17.2.3",
+    "mdi-material-ui": "^7.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
