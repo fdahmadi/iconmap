@@ -8,17 +8,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: [
+    alias: {
       // Resolve original package first to avoid cycles
-      {
-        find: '@mui/icons-material-original',
-        replacement: path.resolve(__dirname, 'node_modules/@mui/icons-material'),
-      },
+      "@mui/icons-material-original": path.resolve(
+        __dirname,
+        "node_modules/@mui/icons-material"
+      ),
       // Then resolve the mapping file
-      {
-        find: '@mui/icons-material',
-        replacement: path.resolve(__dirname, "icons-mapping.jsx"),
-      },
-    ],
+      "@mui/icons-material": path.resolve(__dirname, "icons-mapping.jsx"),
+    },
   },
 });

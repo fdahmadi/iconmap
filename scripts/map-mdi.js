@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-let fileName = "./scripts/icons-mapping-output.txt";
+let fileName = "./icon-mappings-output-mdi.txt";
 let fileContent = fs.readFileSync(fileName, "utf-8");
 let IconsMapping = {};
 fileContent.split("\n").map((line) => {
@@ -29,7 +29,7 @@ const generateMapping = () => {
   for (const MuiIconName in IconsMapping) {
     const fluentName = IconsMapping[MuiIconName];
     if (fluentName == "null") {
-      content += `export { ${MuiIconName} } from '@mui/icons-material';\n`;
+      content += `export { ${MuiIconName} } from '@mui/icons-material-original';\n`;
       continue;
     }
     content += `export const ${MuiIconName} = ${fluentName};\n`;
