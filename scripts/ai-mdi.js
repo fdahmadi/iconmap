@@ -128,38 +128,71 @@ MDI Material UI icon name: ${mdiIconName}`;
   }
 }
 
+async function processIcon(mdiIconName, index, totalIcons) {
+  console.log(`\n[${index + 1}/${totalIcons}] Processing: ${mdiIconName}`);
+
+  const fluentIconName = await generateMappingWithRetry(mdiIconName);
+
+  // Write to output file
+  if (fluentIconName) {
+    outputStream.write(`${mdiIconName},${fluentIconName}\n`);
+    console.log(`  ✅ [${mdiIconName}] Mapped to: ${fluentIconName}`);
+    return { success: true, mdiIconName, fluentIconName };
+  } else {
+    outputStream.write(`${mdiIconName},null\n`);
+    console.log(`  ❌ [${mdiIconName}] No mapping found (null)`);
+    return { success: false, mdiIconName, fluentIconName: null };
+  }
+}
+
 async function processAllIcons() {
-  const mdiIconsArray = Array.from(mdiIcons).sort();
+  const mdiIconsArray = Array.from(mdiIcons)
+    .sort()
+    .filter((icon) => !processedMdiIcons.has(icon));
+  
   const totalIcons = mdiIconsArray.length;
+  const batchSize = 10;
   let processedCount = processedMdiIcons.size;
   let successCount = 0;
   let nullCount = 0;
 
-  for (const mdiIconName of mdiIconsArray) {
-    // Skip if already processed
-    if (processedMdiIcons.has(mdiIconName)) {
-      continue;
+  console.log(`\n📦 Processing ${totalIcons} icons in batches of ${batchSize}...\n`);
+
+  // Process icons in batches
+  for (let i = 0; i < mdiIconsArray.length; i += batchSize) {
+    const batch = mdiIconsArray.slice(i, i + batchSize);
+    const batchNumber = Math.floor(i / batchSize) + 1;
+    const totalBatches = Math.ceil(totalIcons / batchSize);
+
+    console.log(`\n🔄 Batch ${batchNumber}/${totalBatches} (${batch.length} icons)...`);
+
+    // Process all icons in the batch concurrently
+    const results = await Promise.allSettled(
+      batch.map((mdiIconName, batchIndex) =>
+        processIcon(mdiIconName, processedCount + batchIndex, totalIcons)
+      )
+    );
+
+    // Count successes and failures
+    for (const result of results) {
+      if (result.status === "fulfilled") {
+        if (result.value.success) {
+          successCount++;
+        } else {
+          nullCount++;
+        }
+        processedCount++;
+      } else {
+        console.error(`  ❌ Error processing icon:`, result.reason);
+        nullCount++;
+        processedCount++;
+      }
     }
 
-    console.log(`\n[${processedCount + 1}/${totalIcons}] Processing: ${mdiIconName}`);
-
-    const fluentIconName = await generateMappingWithRetry(mdiIconName);
-
-    // Write to output file
-    if (fluentIconName) {
-      outputStream.write(`${mdiIconName},${fluentIconName}\n`);
-      successCount++;
-      console.log(`  ✅ Mapped to: ${fluentIconName}`);
-    } else {
-      outputStream.write(`${mdiIconName},null\n`);
-      nullCount++;
-      console.log(`  ❌ No mapping found (null)`);
+    // Add a small delay between batches to avoid rate limiting
+    if (i + batchSize < mdiIconsArray.length) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
-
-    processedCount++;
-
-    // Add a small delay to avoid rate limiting
-    await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
   outputStream.end();
